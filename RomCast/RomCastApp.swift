@@ -25,7 +25,7 @@ struct RomCastApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LogoView()
         }
         .modelContainer(sharedModelContainer)
     }
