@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct LogoView: View {
-    @State private var showMainApp = false
+    @AppStorage("disclaimerAccepted") private var disclaimerAccepted = false
+    @State private var showNextScreen = false
     @State private var pulseAnimation = false
 
     var body: some View {
@@ -43,7 +44,7 @@ struct LogoView: View {
 
                 // Continue button with pulsating effect
                 Button(action: {
-                    showMainApp = true
+                    showNextScreen = true
                 }) {
                     Text("Continue")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
@@ -71,8 +72,12 @@ struct LogoView: View {
         .onAppear {
             pulseAnimation = true
         }
-        .fullScreenCover(isPresented: $showMainApp) {
-            ContentView()
+        .fullScreenCover(isPresented: $showNextScreen) {
+            if disclaimerAccepted {
+                ContentView()
+            } else {
+                DisclaimerView()
+            }
         }
     }
 }
@@ -106,7 +111,8 @@ extension Color {
 
 // Alternative logo design with better matching
 struct LogoViewAlternative: View {
-    @State private var showMainApp = false
+    @AppStorage("disclaimerAccepted") private var disclaimerAccepted = false
+    @State private var showNextScreen = false
     @State private var pulseAnimation = false
 
     var body: some View {
@@ -156,7 +162,7 @@ struct LogoViewAlternative: View {
                 // Pulsating Continue Button
                 Button(action: {
                     withAnimation {
-                        showMainApp = true
+                        showNextScreen = true
                     }
                 }) {
                     ZStack {
@@ -207,8 +213,12 @@ struct LogoViewAlternative: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showMainApp) {
-            ContentView()
+        .fullScreenCover(isPresented: $showNextScreen) {
+            if disclaimerAccepted {
+                ContentView()
+            } else {
+                DisclaimerView()
+            }
         }
     }
 }
